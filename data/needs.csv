@@ -1,0 +1,4 @@
+id,area,category,description,people_affected,days_pending,lat,lon,proof_file,urgency_score,status
+c56d6935,"north street, anna nagar",Medical,100 people get injured by fire accident ,100,1,13.0836939,80.270186,a76a7b26_OIP.jpeg,38.8,Open
+df15953c,"periyar nagar , 5th street",Food,lack of food due to lpg shortage,69,4,11.6469616,78.2106958,caf9fa38_global_action_to_end_plastic_pollution_761501.png,36.9,Assigned to elakkiasri
+766bebd5,"south street , vengaivasal",Sanitation,road cleaning,73,10,11.6469616,78.2106958,1bd0510f_how.png,38.2,Assigned to bhavana

@@ -125,12 +125,20 @@ def get_coordinates(address):
 needs_df      = load_needs()
 volunteers_df = load_volunteers()
 
+# Fix column types to prevent dtype errors
+if not volunteers_df.empty:
+    volunteers_df["assigned_to"] = volunteers_df["assigned_to"].astype(str).replace("nan", "")
+    volunteers_df["id"] = volunteers_df["id"].astype(str)
+if not needs_df.empty:
+    needs_df["id"] = needs_df["id"].astype(str)
+    needs_df["status"] = needs_df["status"].astype(str)
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.image(
     "https://img.icons8.com/fluency/96/helping-hand.png", width=60
 )
 st.sidebar.title("Smart Resource Allocation")
-st.sidebar.caption("Hackathon Edition 🚀")
+st.sidebar.caption("")
 
 page = st.sidebar.radio("Navigate", [
     "📊 Dashboard",
@@ -207,11 +215,21 @@ if page == "📊 Dashboard":
             size="score",
             hover_name="label",
             color_discrete_map={"Need": "#e74c3c", "Volunteer": "#2ecc71"},
-            zoom=10,
-            height=420,
+            zoom=9,
+            center={"lat": map_df["lat"].mean(), "lon": map_df["lon"].mean()},
+            height=500,
             mapbox_style="open-street-map",
+            size_max=25,
         )
-        fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0))
+        fig_map.update_layout(
+            margin=dict(l=0, r=0, t=0, b=0),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom", y=1.02,
+                xanchor="right",  x=1,
+                font=dict(size=14)
+            )
+        )
         st.plotly_chart(fig_map, use_container_width=True)
     else:
         import plotly.graph_objects as go
@@ -220,7 +238,7 @@ if page == "📊 Dashboard":
             mapbox=dict(
                 style="open-street-map",
                 center=dict(lat=13.0827, lon=80.2707),
-                zoom=11,
+                zoom=9,
             ),
             height=420,
             margin=dict(l=0, r=0, t=0, b=0),
